@@ -1,14 +1,14 @@
-title:             Clean Blog
-email:             your-email@example.com
-description:       A Blog Theme by Start Bootstrap
-author:            Start Bootstrap
-baseurl:           "/startbootstrap-clean-blog-jekyll"
-url:               "http://blackrockdigital.github.io"
+title:             Coo个人博客
+email:             jumpuetta@163.com
+description:       人必须忠于自己 乔伊 不能违背自己的本性，带着杀戮活下去很艰难，这条路没有退路，是对是错你都得背负，直至一生。现在快回去找你妈妈，告诉她一切都好，山谷里再也不会有枪声了
+author:            Coo
+baseurl:           "/"
+url:               "http://jumpuetta.github.io"
 
 # Social Profiles
-twitter_username:  SBootstrap
-github_username:   BlackrockDigital
-facebook_username: StartBootstrap
+twitter_username:  no account
+github_username:   jumpuetta
+facebook_username: no account
 
 # Build settings
 markdown:          kramdown
