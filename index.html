@@ -18,7 +18,7 @@ description: "人必须忠于自己 乔伊 不能违背自己的本性，带着�
             {{ post.content | strip_html | truncate:140 }}
         </div>
     </a>
-    <p class="post-meta">Posted on {{ post.date | date: "%Y-%m-%d" }}</p>
+    <p class="post-meta">Posted on {{ post.date | date: "%Y-%m-%d" }} by {% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}</p>
 </div>
 
 <hr>
