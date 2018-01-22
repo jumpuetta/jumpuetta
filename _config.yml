@@ -2,19 +2,20 @@
 title: 个人博客
 header-img: "img/Xacebook.jpg"
 tagline: "cn"  
-description: "jumpuetta|人必须忠于自己 乔伊 不能违背自己的本性，带着杀戮活下去很艰难，这条路没有退路，是对是错你都得背负，直至一生。现在快回去找你妈妈，告诉她一切都好，山谷里再也不会有枪声了"  
+description: "人必须忠于自己 乔伊 不能违背自己的本性，带着杀戮活下去很艰难，这条路没有退路，是对是错你都得背负，直至一生。现在快回去找你妈妈，告诉她一切都好，山谷里再也不会有枪声了"  
 baseurl: ""
+author: jumpuetta
 url: "http://jumpuetta.github.io"  
 
 # About/contact
 owner: 
   name: "jumpuetta"
   email: jumpuetta@163.com
-  bio: "笨方法学写作"
+  bio: "个人博客"
 
 # Data
-gavatar: img/favicon.ico
-favicon: img/favicon.ico
+gavatar: img/logo.png
+favicon: img/logo.png
 
 douban_username:  
 twitter_username: 
@@ -42,16 +43,16 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      author: "CNFeat"
+      author: "jumpuetta"
       header-img: "img/green.jpg" # We don't want posts without a header image, that whould mean white on white
 
 # Comments 
 comments :
   provider : disqus
   duoshuo :
-    short_name : cnfeat
+    short_name : jumpuetta
   disqus :
-      short_name : cnfeat
+      short_name : jumpuetta
 
 # Analytics and webmaster tools stuff goes here
 google_analytics: UA-80884545-1
