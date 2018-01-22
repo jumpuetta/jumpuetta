@@ -6,7 +6,5 @@ header-img: "img/green.jpg"
 ---
 
 
-<center>
-    <p><img src="/img/head.jpg" align="center"></p>
-</center>
+![](http://jumpuetta.github.io/img/head.jpg)
 
