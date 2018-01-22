@@ -11,13 +11,13 @@ author:     "jumpuetta"
 
 产生OutOfMemoryError错误的原因包括：
 
-	1. java.lang.OutOfMemoryError: Java heap space
-	
-	2. java.lang.OutOfMemoryError: PermGen space及其解决方法
-	
-	3. java.lang.OutOfMemoryError: unable to create new native thread
-	
-	4. java.lang.OutOfMemoryError：GC overhead limit exceeded
+>1. java.lang.OutOfMemoryError: Java heap space
+
+>2. java.lang.OutOfMemoryError: PermGen space及其解决方法
+
+>3. java.lang.OutOfMemoryError: unable to create new native thread
+
+>4. java.lang.OutOfMemoryError：GC overhead limit exceeded
 
 
 对于第1种异常，表示Java堆空间不够，当应用程序申请更多的内存，而Java堆内存已经无法满足应用程序对内存的需要，将抛出这种异常。
@@ -30,8 +30,8 @@ author:     "jumpuetta"
 
 下面两个异常与OOM有关系，但是，又没有绝对关系。
 
-	java.lang.StackOverflowError …
-	java.net.SocketException: Too many open files
+>java.lang.StackOverflowError …
+>java.net.SocketException: Too many open files
 
 对于第1种异常，是JVM的线程由于递归或者方法调用层次太多，占满了线程堆栈而导致的，线程堆栈默认大小为1M。
 
