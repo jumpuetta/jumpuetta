@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "OutOfMemoryError详解"
-subtitle: "我们都知道JVM的内存管理是自动化的，Java语言的程序指针也不需要开发人员手工释放，		   JVM的GC会自动的进行回收，但是，如果编程不当，JVM仍然会发生内存泄露，导致Java程		   序产生了OutOfMemoryError(OOM)错误。"
-date:   2011-12-23 15:45:13
-background: '/img/posts/06.jpg'
-author:     "jumpuetta"
+title: OutOfMemoryError详解
+date: 2017-12-23
+categories: blog
+tags: [OutOfMemoryError,java,JVM]
+description: 我们都知道JVM的内存管理是自动化的，Java语言的程序指针也不需要开发人员手工释放，		   JVM的GC会自动的进行回收，但是，如果编程不当，JVM仍然会发生内存泄露，导致Java程		   序产生了OutOfMemoryError(OOM)错误。
 ---
 
 我们都知道JVM的内存管理是自动化的，Java语言的程序指针也不需要开发人员手工释放，JVM的GC会自动的进行回收，但是，如果编程不当，JVM仍然会发生内存泄露，导致Java程序产生了OutOfMemoryError(OOM)错误。

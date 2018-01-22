@@ -1,13 +1,11 @@
 ---
 layout: post
-title:  "Mysql授权远程登录"
-subtitle: "报错:1130-host … is not allowed to connect to this MySql server"
-date:   2011-11-20 15:45:13
-background: '/img/posts/05.jpg'
-author:     "jumpuetta"
+title: Mysql授权远程登录
+date: 2017-11-20
+categories: blog
+tags: [mysql,allowed to connect,1130-host]
+description: 报错:1130-host … is not allowed to connect to this MySql server
 ---
-
-
 
 
 **报错:1130-host … is not allowed to connect to this MySql server**

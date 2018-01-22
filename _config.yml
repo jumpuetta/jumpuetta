@@ -1,19 +1,62 @@
-title:             个人博客
-email:             jumpuetta@163.com
-description:       人必须忠于自己 乔伊 不能违背自己的本性，带着杀戮活下去很艰难，这条路没有退路，是对是错你都得背负，直至一生。现在快回去找你妈妈，告诉她一切都好，山谷里再也不会有枪声了
-author:            jumpuetta
-baseurl:           "/"
-url:               "http://jumpuetta.github.io"
+# Site settings
+title: 个人博客
+header-img: "img/Xacebook.jpg"
+tagline: "cn"  
+description: "jumpuetta|人必须忠于自己 乔伊 不能违背自己的本性，带着杀戮活下去很艰难，这条路没有退路，是对是错你都得背负，直至一生。现在快回去找你妈妈，告诉她一切都好，山谷里再也不会有枪声了"  
+baseurl: ""
+url: "http://jumpuetta.github.io"  
 
-# Social Profiles
-twitter_username:  
-github_username:   jumpuetta
+# About/contact
+owner: 
+  name: "jumpuetta"
+  email: jumpuetta@163.com
+  bio: "笨方法学写作"
+
+# Data
+gavatar: img/favicon.ico
+favicon: img/favicon.ico
+
+douban_username:  
+twitter_username: 
+github_username: jumpuetta
 facebook_username: 
+weibo_username: 
+zhihu_username:
 
-# Build settings
-markdown:          kramdown
-paginate:          5
-paginate_path:     "/posts/page:num/"
-plugins:
-  - jekyll-feed
-  - jekyll-paginate
+# Build settings  
+# use Github Flavored Markdown !important  
+# document: http://jekyllrb.com/docs/configuration/#kramdown  
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+paginate: 15
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Shanghai
+
+# Defaults for posts
+defaults:
+    scope: 
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "CNFeat"
+      header-img: "img/green.jpg" # We don't want posts without a header image, that whould mean white on white
+
+# Comments 
+comments :
+  provider : disqus
+  duoshuo :
+    short_name : cnfeat
+  disqus :
+      short_name : cnfeat
+
+# Analytics and webmaster tools stuff goes here
+google_analytics: UA-80884545-1
+google_verify:
+# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
+bing_verify:
+
+# Links to include in footer navigation
