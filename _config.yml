@@ -31,11 +31,12 @@ zhihu_username:
 markdown: kramdown
 kramdown:
   input:  GFM
-  use_coderay: true
 highlighter: rouge
 permalink: pretty
 paginate: 15
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+plugins: [jekyll-paginate]
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone: Asia/Shanghai
