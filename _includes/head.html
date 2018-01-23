@@ -21,6 +21,8 @@
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
 
+    <link rel="stylesheet" href="{{ "/css/highlight.github.min.css" | prepend: site.baseurl }}">
+
     <!-- Custom Fonts -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -34,7 +36,7 @@
     <![endif]-->
 
     <!-- async load function -->
-    <script>
+    <!--   <script>
         function async(u, c) {
           var d = document, t = 'script',
               o = d.createElement(t),
@@ -43,6 +45,17 @@
           if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
           s.parentNode.insertBefore(o, s);
         }
-    </script>
+    </script> -->
+
+    <!-- jQuery -->
+    <script src="{{ "/js/jquery.min.js " | prepend: site.baseurl }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ "/js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{{ "/js/clean-blog.min.js " | prepend: site.baseurl }}"></script>
+
+    <script src="{{ "/js/highlight.min.js " | prepend: site.baseurl}}"></script>
 
 </head>
