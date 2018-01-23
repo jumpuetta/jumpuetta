@@ -33,7 +33,7 @@ layout: default
 
 
 <!-- Post Content -->
-<article>
+<article id="article">
     <div class="container">
         <div class="row">
             <div class="col-lg-7 col-lg-offset-3 col-md-8 col-md-offset-2 post-container">
@@ -86,14 +86,21 @@ layout: default
 
 <!-- disqus end -->
 
+<script src="{{ "/js/autoc.min.js " | prepend: site.baseurl}}"></script>
+
+<script src="{{ "/js/highlight.min.js " | prepend: site.baseurl}}"></script>
+
 <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
 <script>
-    anchors.options = {
-      visible: 'always',
-      placement: 'right',
-      icon: ''
-    };
-    anchors.add().remove('.intro-header h1').remove('.subheading');   
+    $('#article').autoc({
+        title: 'article'
+    });
+    // anchors.options = {
+    //   visible: 'always',
+    //   placement: 'right',
+    //   icon: ''
+    // };
+    // anchors.add().remove('.intro-header h1').remove('.subheading');   
 </script>
 
 <!-- Highlight.js -->
