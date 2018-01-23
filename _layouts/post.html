@@ -36,7 +36,6 @@ layout: default
 <article>
     <div class="container">
         <div class="row">
-            <div id="article" class="col-lg-2 col-lg-offset-9 col-md-2 col-md-offset-10">
             <div class="col-lg-7 col-lg-offset-2 col-md-8 col-md-offset-2 post-container">
 
                 {{ content }}
@@ -56,6 +55,7 @@ layout: default
                     {% endif %}
                 </ul>
             </div>
+            <div id="article" class="col-lg-2 col-md-2">
         </div>        
     </div>
 </article>    
@@ -87,7 +87,7 @@ layout: default
 
 <!-- disqus end -->
 
-<script src="{{ "/js/autoc.min.js " | prepend: site.baseurl}}"></script>
+<!-- <script src="{{ "/js/autoc.min.js " | prepend: site.baseurl}}"></script> -->
 
 <script src="{{ "/js/anchor.min.js " | prepend: site.baseurl}}"></script>
 
@@ -95,11 +95,11 @@ layout: default
 
 <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
 <script>
-    $('#article').autoc({
-        title: '目录',
-        hasDirectoryInArticle: true,
-        hasChapterCodeInDirectory: false
-    });
+    // $('#article').autoc({
+    //     title: '',
+    //     hasDirectoryInArticle: true,
+    //     hasChapterCodeInDirectory: false
+    // });
     anchors.options = {
       visible: 'always',
       placement: 'right',
