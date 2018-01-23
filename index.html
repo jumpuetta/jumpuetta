@@ -3,7 +3,7 @@ layout: page
 description: "人必须忠于自己乔伊不能违背自己的本性，带着杀戮活下去很艰难，这条路没有退路，是对是错你都得背负，直至一生。现在快回去找你妈妈，告诉她一切都好，山谷里再也不会有枪声了"
 ---
 
-{% for post in paginator.posts %}
+{% for post in site.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">            
