@@ -87,7 +87,14 @@ layout: default
 <!-- disqus end -->
 
 <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-
+<script>
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      icon: ''
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading');   
+</script>
 
 <!-- Highlight.js -->
 <script>
