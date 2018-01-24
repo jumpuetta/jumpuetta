@@ -39,7 +39,7 @@ layout: default
 <article>
     <div class="container">
         <div class="row">
-            <div class="col-lg-7 col-lg-offset-2 col-md-8 col-md-offset-2 post-container">
+            <div class="col-lg-8 col-lg-offset-1 col-md-7 col-md-offset-2 post-container">
 
                 {{ content }}
 
@@ -62,65 +62,16 @@ layout: default
 					{% include comments.html %}
 				</div>
             </div>
+
+            <div class="col-lg-3 col-md-3">
+                {% include post_nav.html %}
+            </div>
             <!-- <div id="article" class="col-lg-2 col-md-2"></div> -->
         </div>        
     </div>
 </article>   
 
-
-<!-- disqus  start  
-<div id="disqus_thread"></div>
- -->
-<!-- <script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
-    /*
-    var disqus_config = function () {
-        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() {  // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-
-        s.src = '//cnfeat.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script> -->
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-
-<!-- disqus end -->
-
-<!-- <script src="{{ "/js/autoc.min.js " | prepend: site.baseurl}}"></script> -->
-<script src="{{ "/js/anchor.min.js " | prepend: site.baseurl}}"></script>
-<script>
-    // $('#article').autoc({
-    //     title: '目录',
-    //     hasDirectoryInArticle: true,
-    //     hasChapterCodeInDirectory: false
-    // });
-    anchors.options = {
-      visible: 'always',
-      placement: 'right',
-      icon: ''
-    };
-    anchors.add().remove('.intro-header h1').remove('.subheading');   
-</script>
-
-
-<!-- use Highlight.js to high light code, default use -->
-<!-- 
-<script src="{{ "/js/highlight.min.js " | prepend: site.baseurl}}"></script> 
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
- -->
-
 
 <style>
     /* place left on bigger screen */
@@ -133,3 +84,11 @@ layout: default
         }
     }
 </style>
+
+<!-- use Highlight.js to high light code, default use -->
+<link rel="stylesheet" href="{{ "/css/highlight.min.css" | prepend: site.baseurl }}"> 
+<script src="{{ "/js/highlight.min.js " | prepend: site.baseurl}}"></script> 
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
