@@ -6,5 +6,5 @@ header-img: "img/green.jpg"
 ---
 
 
-![](http://jumpuetta.github.io/img/head.jpg)
+![](/img/head.jpg)
 
