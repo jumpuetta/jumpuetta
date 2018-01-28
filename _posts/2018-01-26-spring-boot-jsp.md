@@ -9,7 +9,7 @@ subtitle: 虽然Spring-Boot整合jsp是个简单的事,但自己确实踩了几�
 
 spring-boot官方不推荐使用jsp,自己项目中也没用到,但作为学习,还是想尝试下用spring-boot整合jsp,中间踩了很多坑，还是记录下吧。
 
-### 配置pom.xml文件 ###
+## 配置pom.xml文件 ##
 ```xml
 <dependencyManagement>
         <dependencies>
@@ -48,13 +48,13 @@ spring-boot官方不推荐使用jsp,自己项目中也没用到,但作为学习,
     </dependencyManagement>
 ```
 
-### 添加WEB-INF目录 ###
+## 添加WEB-INF目录 ##
 在src/main目录下新建webapp/WEB-INF/jsp目录,并编写自己的jsp页面
 ![](/attach/20180126001.png)
 
 
 
-### 配置application.properties ###
+## 配置application.properties ##
 ```properties
 server.port=9100
 server.contextPath=/web
@@ -73,7 +73,7 @@ spring.view.prefix=/WEB-INF/jsp/
 spring.view.suffix=.jsp
 具体从哪一个版本开始变化没做研究
 
-### 启动类继承SpringBootServletInitializer ###
+## 启动类继承SpringBootServletInitializer ##
 这个是必须的,容易漏掉
 ```java
 @EnableAutoConfiguration
@@ -86,7 +86,7 @@ public class AppServer extends SpringBootServletInitializer{
 }
 ```
 
-### controller ###
+## controller ##
 
 ```java
 @RequestMapping("/jsp")
@@ -96,7 +96,7 @@ public String helloJsp(Map<String,Object> map){
 }
 ```
 
-### 运行项目 ###
+## 运行项目 ##
 
 可以因为项目打包结构的问题,用idea直接运行项目访问 http://localhost:9100/web/hello/jsp 总是提示404错误,似乎无法找到响应的jsp页面
 ![](/attach/20180126001.png)
