@@ -55,6 +55,8 @@ message LogonReqMessage {
       required UserStatus status = 3;
   }
  ```
+
+
 这里将给出以上消息定义的关键性说明（仅包括上一小节中没有描述的）。
 
 1. enum是枚举类型定义的关键字，等同于C++/Java中的enum。
@@ -62,6 +64,7 @@ message LogonReqMessage {
 3. 和C++/Java中的枚举不同的是，枚举值之间的分隔符是分号，而不是逗号。
 4. OFFLINE/ONLINE为枚举值。
 5. 0和1表示枚举值所对应的实际整型值，和C/C++一样，可以为枚举值指定任意整型值，而无需总是从0开始定义。如：
+
 ```
 enum OperationCode {
   LOGON_REQ_CODE = 101;
@@ -78,6 +81,8 @@ enum OperationCode {
 
 
 我们可以在同一个.proto文件中定义多个message，这样便可以很容易的实现嵌套消息的定义。如：
+
+
 ```
 enum UserStatus {
   OFFLINE = 0;
@@ -93,10 +98,14 @@ message LogonRespMessage {
   required UserInfo userInfo = 2;
 }
 ```
+
+
 这里将给出以上消息定义的关键性说明（仅包括上两小节中没有描述的）。
 
 1. LogonRespMessage消息的定义中包含另外一个消息类型作为其字段，如UserInfo userInfo。
 2. 上例中的UserInfo和LogonRespMessage被定义在同一个.proto文件中，那么我们是否可以包含在其他.proto文件中定义的message呢？Protocol Buffer提供了另外一个关键字import，这样我们便可以将很多通用的message定义在同一个.proto文件中，而其他消息定义文件可以通过import的方式将该文件中定义的消息包含进来，如：
+
+
 ```
 import "myproject/CommonMessages.proto"
 ```
@@ -133,9 +142,13 @@ import "myproject/CommonMessages.proto"
 
 
 我们可以在.proto文件中定义包名，如：
+
+
 ```
 package ourproject.lyphone;
 ```
+
+
 该包名在生成对应的C++文件时，将被替换为名字空间名称，既namespace ourproject { namespace lyphone。而在生成的Java代码文件中将成为包名。
 
 ## 九、Option  ##
