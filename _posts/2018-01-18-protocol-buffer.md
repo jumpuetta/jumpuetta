@@ -11,6 +11,8 @@ subtitle: 在计算机操作系统中,轻量级进程（LWP）是一种实现多
 该系列Blog的内容主体主要源自于Protocol Buffer的官方文档，而代码示例则抽取于当前正在开发的一个公司内部项目的Demo。这样做的目的主要在于不仅可以保持Google文档的良好风格和系统性，同时再结合一些比较实用和通用的用例，这样就更加便于公司内部的培训，以及和广大网友的技术交流。需要说明的是，Blog的内容并非line by line的翻译，其中包含一些经验性总结，与此同时，对于一些不是非常常用的功能并未予以说明，有兴趣的开发者可以直接查阅Google的官方文档。
 
 ## 一、为什么使用Protocol Buffer？ ##
+
+
 在回答这个问题之前，我们还是先给出一个在实际开发中经常会遇到的系统场景。比如：我们的客户端程序是使用Java开发的，可能运行自不同的平台，如：Linux、Windows或者是Android，而我们的服务器程序通常是基于Linux平台并使用C++开发完成的。在这两种程序之间进行数据通讯时存在多种方式用于设计消息格式，如：
 
 1. 直接传递C/C++语言中一字节对齐的结构体数据，只要结构体的声明为定长格式，那么该方式对于C/C++程序而言就非常方便了，仅需将接收到的数据按照结构体类型强行转换即可。事实上对于变长结构体也不会非常麻烦。在发送数据时，也只需定义一个结构体变量并设置各个成员变量的值之后，再以char*的方式将该二进制数据发送到远端。反之，该方式对于Java开发者而言就会非常繁琐，首先需要将接收到的数据存于ByteBuffer之中，再根据约定的字节序逐个读取每个字段，并将读取后的值再赋值给另外一个值对象中的域变量，以便于程序中其他代码逻辑的编写。对于该类型程序而言，联调的基准是必须客户端和服务器双方均完成了消息报文构建程序的编写后才能展开，而该设计方式将会直接导致Java程序开发的进度过慢。即便是Debug阶段，也会经常遇到Java程序中出现各种域字段拼接的小错误。
@@ -19,6 +21,8 @@ subtitle: 在计算机操作系统中,轻量级进程（LWP）是一种实现多
 对于以上两种方式所产生的问题，Protocol Buffer均可以很好的解决，不仅如此，Protocol Buffer还有一个非常重要的优点就是可以保证同一消息报文新旧版本之间的兼容性。至于具体的方式我们将会在后续的博客中给出。
 
 ## 二、定义第一个Protocol Buffer消息。 ##
+
+
 创建扩展名为.proto的文件，如：MyMessage.proto，并将以下内容存入该文件中。
 ```
 message LogonReqMessage {
@@ -69,7 +73,10 @@ enum OperationCode {
   RETRIEVE_BUDDIES_RESP_CODE = 1003;
 }
 ```
+
 ## 四、定义第三个（含有嵌套消息字段）Protocol Buffer消息。 ##
+
+
 我们可以在同一个.proto文件中定义多个message，这样便可以很容易的实现嵌套消息的定义。如：
 ```
 enum UserStatus {
@@ -94,19 +101,25 @@ message LogonRespMessage {
 import "myproject/CommonMessages.proto"
 ```
     
+
 ## 五、限定符(required/optional/repeated)的基本规则。 ##
+
 
 1. 在每个消息中必须至少留有一个required类型的字段。 
 2. 每个消息中可以包含0个或多个optional类型的字段。
 3. repeated表示的字段可以包含0个或多个数据。需要说明的是，这一点有别于C++/Java中的数组，因为后两者中的数组必须包含至少一个元素。
 4. 如果打算在原有消息协议中添加新的字段，同时还要保证老版本的程序能够正常读取或写入，那么对于新添加的字段必须是optional或repeated。道理非常简单，老版本程序无法读取或写入新增的required限定符的字段。
 
+
 ## 六、类型对照表。 ##
+
 
 
 ![](/attach/20180129001.png)
 
+
 ## 七、Protocol Buffer消息升级原则。 ##
+
 在实际的开发中会存在这样一种应用场景，既消息格式因为某些需求的变化而不得不进行必要的升级，但是有些使用原有消息格式的应用程序暂时又不能被立刻升级，这便要求我们在升级消息格式时要遵守一定的规则，从而可以保证基于新老消息格式的新老程序同时运行。规则如下：
 
 1. 不要修改已经存在字段的标签号。
@@ -117,6 +130,8 @@ import "myproject/CommonMessages.proto"
 
 
 ## 八、Packages。 ##
+
+
 我们可以在.proto文件中定义包名，如：
 ```
 package ourproject.lyphone;
@@ -124,6 +139,8 @@ package ourproject.lyphone;
 该包名在生成对应的C++文件时，将被替换为名字空间名称，既namespace ourproject { namespace lyphone。而在生成的Java代码文件中将成为包名。
 
 ## 九、Options。 ##
+
+
 Protocol Buffer允许我们在.proto文件中定义一些常用的选项，这样可以指示Protocol Buffer编译器帮助我们生成更为匹配的目标语言代码。Protocol Buffer内置的选项被分为以下三个级别：
 
 1. 文件级别，这样的选项将影响当前文件中定义的所有消息和枚举。
@@ -150,6 +167,8 @@ repeated int32 samples = 4 [packed=true]。
 optional int32 result_per_page = 3 [default = 10]。
 
 ## 十、命令行编译工具。 ##
+
+
 protoc--proto_path=IMPORT_PATH --cpp_out=DST_DIR --java_out=DST_DIR --python_out=DST_DIR path/to/file.proto
 这里将给出上述命令的参数解释。
 
