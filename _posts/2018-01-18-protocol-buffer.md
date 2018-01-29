@@ -10,7 +10,7 @@ subtitle: 在计算机操作系统中,轻量级进程（LWP）是一种实现多
 
 该系列Blog的内容主体主要源自于Protocol Buffer的官方文档，而代码示例则抽取于当前正在开发的一个公司内部项目的Demo。这样做的目的主要在于不仅可以保持Google文档的良好风格和系统性，同时再结合一些比较实用和通用的用例，这样就更加便于公司内部的培训，以及和广大网友的技术交流。需要说明的是，Blog的内容并非line by line的翻译，其中包含一些经验性总结，与此同时，对于一些不是非常常用的功能并未予以说明，有兴趣的开发者可以直接查阅Google的官方文档。
 
-## 一、为什么使用Protocol Buffer？ ##
+## 一、为什么使用Protocol Buffer ##
 
 
 在回答这个问题之前，我们还是先给出一个在实际开发中经常会遇到的系统场景。比如：我们的客户端程序是使用Java开发的，可能运行自不同的平台，如：Linux、Windows或者是Android，而我们的服务器程序通常是基于Linux平台并使用C++开发完成的。在这两种程序之间进行数据通讯时存在多种方式用于设计消息格式，如：
@@ -20,7 +20,7 @@ subtitle: 在计算机操作系统中,轻量级进程（LWP）是一种实现多
 2. 使用SOAP协议(WebService)作为消息报文的格式载体，由该方式生成的报文是基于文本格式的，同时还存在大量的XML描述信息，因此将会大大增加网络IO的负担。又由于XML解析的复杂性，这也会大幅降低报文解析的性能。总之，使用该设计方式将会使系统的整体运行性能明显下降。
 对于以上两种方式所产生的问题，Protocol Buffer均可以很好的解决，不仅如此，Protocol Buffer还有一个非常重要的优点就是可以保证同一消息报文新旧版本之间的兼容性。至于具体的方式我们将会在后续的博客中给出。
 
-## 二、定义第一个Protocol Buffer消息。 ##
+## 二、定义第一个Protocol Buffer消息 ##
 
 
 创建扩展名为.proto的文件，如：MyMessage.proto，并将以下内容存入该文件中。
@@ -41,7 +41,7 @@ message LogonReqMessage {
 6. 标签数字1和2则表示不同的字段在序列化后的二进制数据中的布局位置。在该例中，passwd字段编码后的数据一定位于acctID之后。需要注意的是该值在同一message中不能重复。另外，对于Protocol Buffer而言，标签值为1到15的字段在编码时可以得到优化，既标签值和类型信息仅占有一个byte，标签范围是16到2047的将占有两个bytes，而Protocol Buffer可以支持的字段数量则为2的29次方减一。有鉴于此，我们在设计消息结构时，可以尽可能考虑让repeated类型的字段标签位于1到15之间，这样便可以有效的节省编码后的字节数量。
 
 
-## 三、定义第二个（含有枚举字段）Protocol Buffer消息。 ##
+## 三、含有枚举字段 ##
 
  ```
   //在定义Protocol Buffer的消息时，可以使用和C++/Java代码同样的方式添加注释。
@@ -74,7 +74,7 @@ enum OperationCode {
 }
 ```
 
-## 四、定义第三个（含有嵌套消息字段）Protocol Buffer消息。 ##
+## 四、含有嵌套消息字段 ##
 
 
 我们可以在同一个.proto文件中定义多个message，这样便可以很容易的实现嵌套消息的定义。如：
@@ -102,7 +102,7 @@ import "myproject/CommonMessages.proto"
 ```
     
 
-## 五、限定符(required/optional/repeated)的基本规则。 ##
+##  五、限定符  ##
 
 
 1. 在每个消息中必须至少留有一个required类型的字段。 
@@ -111,14 +111,14 @@ import "myproject/CommonMessages.proto"
 4. 如果打算在原有消息协议中添加新的字段，同时还要保证老版本的程序能够正常读取或写入，那么对于新添加的字段必须是optional或repeated。道理非常简单，老版本程序无法读取或写入新增的required限定符的字段。
 
 
-## 六、类型对照表。 ##
+## 六、类型对照表 ##
 
 
 
 ![](/attach/20180129001.png)
 
 
-## 七、Protocol Buffer消息升级原则。 ##
+## 七、Protocol Buffer消息升级原则 ##
 
 在实际的开发中会存在这样一种应用场景，既消息格式因为某些需求的变化而不得不进行必要的升级，但是有些使用原有消息格式的应用程序暂时又不能被立刻升级，这便要求我们在升级消息格式时要遵守一定的规则，从而可以保证基于新老消息格式的新老程序同时运行。规则如下：
 
@@ -129,7 +129,7 @@ import "myproject/CommonMessages.proto"
 5. optional和repeated限定符也是相互兼容的。
 
 
-## 八、Packages。 ##
+## 八、Packages ##
 
 
 我们可以在.proto文件中定义包名，如：
@@ -138,7 +138,7 @@ package ourproject.lyphone;
 ```
 该包名在生成对应的C++文件时，将被替换为名字空间名称，既namespace ourproject { namespace lyphone。而在生成的Java代码文件中将成为包名。
 
-## 九、Options。 ##
+## 九、Option  ##
 
 
 Protocol Buffer允许我们在.proto文件中定义一些常用的选项，这样可以指示Protocol Buffer编译器帮助我们生成更为匹配的目标语言代码。Protocol Buffer内置的选项被分为以下三个级别：
@@ -166,7 +166,7 @@ repeated int32 samples = 4 [packed=true]。
 5. [default = default_value]: optional类型的字段，如果在序列化时没有被设置，或者是老版本的消息中根本不存在该字段，那么在反序列化该类型的消息是，optional的字段将被赋予类型相关的缺省值，如bool被设置为false，int32被设置为0。Protocol Buffer也支持自定义的缺省值，如：
 optional int32 result_per_page = 3 [default = 10]。
 
-## 十、命令行编译工具。 ##
+## 十、命令行编译工具  ##
 
 
 protoc--proto_path=IMPORT_PATH --cpp_out=DST_DIR --java_out=DST_DIR --python_out=DST_DIR path/to/file.proto
