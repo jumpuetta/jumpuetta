@@ -4,7 +4,7 @@ title: protocol buffer在java中的使用
 date: 2018-01-30
 categories: blog
 tags: [protocol buffer]
-subtitle: Linux常用shell命令汇总
+subtitle: protocol buffer在java中的使用
 ---
 
 ## protocol buffer与其他几项序列化方案对比 ##
