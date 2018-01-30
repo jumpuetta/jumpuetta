@@ -17,9 +17,9 @@ subtitle: Linux常用shell命令汇总
 
 ## windows安装protocol buffer编译器protoc
 编译器下载地址： [https://github.com/google/protobuf/releases](https://github.com/google/protobuf/releases "编译器")
-1. 下载protoc-x.x.x-win32.zip
-2. 解压得到protoc.exe,这个是protobuf的编译器
-3. 如果你需要在任意目录下都可以调用protobuf的编译器，可以在环境变量中配置path变量，在其中加入protoc.exe的目录。
+	1. 下载protoc-x.x.x-win32.zip
+	2. 解压得到protoc.exe,这个是protobuf的编译器
+	3. 如果你需要在任意目录下都可以调用protobuf的编译器，可以在环境变量中配置path变量，在其中加入protoc.exe的目录。
 
 ## 创建maven项目，编写编译proto文件 ##
 1. 在pom.xml中加入依赖
