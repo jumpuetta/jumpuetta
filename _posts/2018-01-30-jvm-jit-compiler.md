@@ -1,7 +1,7 @@
 ---
 layout: post
 title: java 解释器与JIT编译器
-date: 2018-01-18
+date: 2018-01-30
 categories: blog
 tags: [jvm,JIT]
 subtitle: 但是如今的HotSpot VM中不仅内置有解释器，还内置有先进的JIT（Just In Time Compiler）编译器，在Java虚拟机运行时，解释器和即时编译器能够相互协作，各自取长补短
