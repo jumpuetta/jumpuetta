@@ -279,14 +279,14 @@ iptables [-t filter] [-AI INPUT,OUTPUT,FORWARD] [-io interface] [-p tcp,udp,icmp
 	icmp：封包为 ICMP 协定、    
 	all ：表示为所有的封包！    
 
--s     ：来源封包的 IP 或者是 Network ( 网域 )；
---sport：来源封包的 port 号码，也可以使用 port1:port2 如 21:23 同时通过 21,22,23 的意           思 
--d     ：目标主机的 IP 或者是 Network ( 网域 )； 
---dport：目标主机的 port 号码； 
--j 　　：动作，可以接底下的动作；
-   ACCEPT ：接受该封包 
-   DROP　 ：丢弃封包 
-   LOG　　：将该封包的信息记录下来 (预设记录到 /var/log/messages 文件) 
+-s     ：来源封包的 IP 或者是 Network ( 网域 )；  
+--sport：来源封包的 port 号码，也可以使用 port1:port2 如 21:23 同时通过 21,22,23 的意           思    
+-d     ：目标主机的 IP 或者是 Network ( 网域 )；     
+--dport：目标主机的 port 号码；    
+-j 　　：动作，可以接底下的动作；    
+   ACCEPT ：接受该封包      
+   DROP　 ：丢弃封包     
+   LOG　　：将该封包的信息记录下来 (预设记录到 /var/log/messages 文件)     
 
 ## 释放缓存区内存的方法 ##
 
