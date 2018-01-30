@@ -23,7 +23,6 @@ subtitle: Linux常用shell命令汇总
 
 ## 创建maven项目，编写编译proto文件 ##
 1. 在pom.xml中加入依赖
-
 ```xml
 <dependencies>
 	<dependency>
@@ -37,7 +36,6 @@ subtitle: Linux常用shell命令汇总
 2. 编写XXX.proto文件
 新建addressbook.proto文件，编辑内容
 语法可参考 [protocol-buffer介绍](blog/2018/01/29/protocol-buffer/)
-
 ```
 syntax = "proto2";
 
@@ -81,7 +79,6 @@ message AddressBook {
 ## java api调用 ##
 
 1. 创建对象
-
 ```java
 public static AddressBookProtos.Person build() {
 		AddressBookProtos.Person.Builder personBuilder = AddressBookProtos.Person.newBuilder();  
@@ -98,7 +95,6 @@ public static AddressBookProtos.Person build() {
 ```
 
 2. 序列化方式1
-
 ```java
 public static void serializable1(AddressBookProtos.Person person) throws InvalidProtocolBufferException{
 		//第一种方式  
@@ -111,7 +107,6 @@ public static void serializable1(AddressBookProtos.Person person) throws Invalid
 ```
 
 3. 序列化方式2
-
 ```java
 public static void serializable2(AddressBookProtos.Person person) throws Exception {
 		//第二种序列化：粘包,将一个或者多个protobuf对象字节写入stream。  
@@ -126,7 +121,6 @@ public static void serializable2(AddressBookProtos.Person person) throws Excepti
 ```
 
 3. 序列化方式3
-
 ```java
 public static void serializable3(AddressBookProtos.Person person) throws Exception {
 		//第三种序列化,写入文件或者Socket  
@@ -141,7 +135,6 @@ public static void serializable3(AddressBookProtos.Person person) throws Excepti
 ```
 
 4. 测试
-
 ```java
 public static void main(String[] args) throws Exception {
 		AddressBookProtos.Person person = SerializableTest.build();
@@ -151,8 +144,7 @@ public static void main(String[] args) throws Exception {
 	}
 ```
 
-5. 结果
-6. 
+5. 结果 
 ```
 张三
 test@gmail.com
