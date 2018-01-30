@@ -36,7 +36,7 @@ subtitle: Linux常用shell命令汇总
 
 2. 编写XXX.proto文件
 新建addressbook.proto文件，编辑内容
-语法可参考: [protocol-buffer介绍](blog/2018/01/29/protocol-buffer/)
+语法可参考: [protocol-buffer介绍](/blog/2018/01/29/protocol-buffer/)
 
 ```
 syntax = "proto2";
