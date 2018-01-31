@@ -80,7 +80,8 @@ message AddressBook {
 
 ## java api调用 ##
 
-1. 创建对象
+1.
+ 创建对象
 
 ```java
 public static AddressBookProtos.Person build() {
@@ -97,7 +98,8 @@ public static AddressBookProtos.Person build() {
 	}
 ```
 
-2. 序列化方式1
+2.
+ 序列化方式1
 
 ```java
 public static void serializable1(AddressBookProtos.Person person) throws InvalidProtocolBufferException{
@@ -110,7 +112,8 @@ public static void serializable1(AddressBookProtos.Person person) throws Invalid
 	}
 ```
 
-3. 序列化方式2
+3.
+ 序列化方式2
 
 ```java
 public static void serializable2(AddressBookProtos.Person person) throws Exception {
@@ -125,7 +128,8 @@ public static void serializable2(AddressBookProtos.Person person) throws Excepti
 	}
 ```
 
-3. 序列化方式3
+3. 
+ 序列化方式3
 
 ```java
 public static void serializable3(AddressBookProtos.Person person) throws Exception {
@@ -140,7 +144,8 @@ public static void serializable3(AddressBookProtos.Person person) throws Excepti
 	}
 ```
 
-4. 测试
+4. 
+  测试
 
 ```java
 public static void main(String[] args) throws Exception {
@@ -151,7 +156,8 @@ public static void main(String[] args) throws Exception {
 	}
 ```
 
-5. 结果
+5.
+ 结果
  
 ```
 张三
