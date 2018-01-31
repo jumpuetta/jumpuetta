@@ -59,18 +59,19 @@ spring-boot官方不推荐使用jsp,自己项目中也没用到,但作为学习,
 server.port=9100
 server.contextPath=/web
 server.session.timeout=1200
-
-#页面默认前缀目录
-spring.mvc.view.prefix=/WEB-INF/jsp/
-#响应页面默认后缀
-spring.mvc.view.suffix=.jsp
+spring.mvc.view.prefix=/WEB-INF/jsp/ #页面默认前缀目录
+spring.mvc.view.suffix=.jsp #响应页面默认后缀
 ```
 1.当parent标签中引入的是1.3.6版本的话,那么applicaion.properties中配置jsp前缀和后缀的时候应该配置如下,一定要带上mvc
+```properties
 spring.mvc.view.prefix=/WEB-INF/jsp/
 spring.mvc.view.suffix=.jsp
+```
 2.当parent标签中引入的是低版本的话,那么applicaion.properties中配置jsp前缀和后缀的时候应该配置如下,一定不要带上mvc
+```properties
 spring.view.prefix=/WEB-INF/jsp/
 spring.view.suffix=.jsp
+```
 具体从哪一个版本开始变化没做研究
 
 ## 启动类继承SpringBootServletInitializer ##
