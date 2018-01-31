@@ -22,7 +22,8 @@ subtitle: protocol buffer在java中的使用
 	3. 如果你需要在任意目录下都可以调用protobuf的编译器，可以在环境变量中配置path变量，在其中加入protoc.exe的目录。   
 
 ## 创建maven项目，编写编译proto文件 ##
-1. 在pom.xml中加入依赖  
+
+1. 在pom.xml中加入依赖    
 
 ```xml
 <dependencies>
@@ -32,9 +33,8 @@ subtitle: protocol buffer在java中的使用
 	    <version>3.5.1</version>
 	</dependency>
 </dependencies>
-```
-
-2. 编写XXX.proto文件   
+```  
+2. 编写XXX.proto文件     
 新建addressbook.proto文件，编辑内容   
 语法可参考: [protocol-buffer介绍](/blog/2018/01/29/protocol-buffer/)   
 
@@ -69,8 +69,7 @@ message AddressBook {
   repeated Person people = 1;
 }
 ```
-
-3. 编译addressbook.proto    
+3. 编译addressbook.proto      
 `protoc -I=[proto文件所在目录] --java_out=[编译结果输出目录] xxxx.proto`     
 我的项目结构      
 
@@ -80,9 +79,8 @@ message AddressBook {
 
 ## java api调用 ##
 
-1.
- 创建对象
-
+1.   
+ 创建对象    
 ```java
 public static AddressBookProtos.Person build() {
 		AddressBookProtos.Person.Builder personBuilder = AddressBookProtos.Person.newBuilder();  
@@ -96,9 +94,8 @@ public static AddressBookProtos.Person build() {
 		AddressBookProtos.Person person = personBuilder.build();
 		return person;
 	}
-```
-
-2.
+```        
+2. 
  序列化方式1
 
 ```java
@@ -110,9 +107,8 @@ public static void serializable1(AddressBookProtos.Person person) throws Invalid
 		AddressBookProtos.Person result = AddressBookProtos.Person.parseFrom(data);  
 		System.out.println(result.getName());
 	}
-```
-
-3.
+```    
+3.  
  序列化方式2
 
 ```java
@@ -126,9 +122,8 @@ public static void serializable2(AddressBookProtos.Person person) throws Excepti
 		AddressBookProtos.Person result = AddressBookProtos.Person.parseDelimitedFrom(byteArrayInputStream);  
 		System.out.println(result.getEmail());  
 	}
-```
-
-3. 
+```    
+4. 
  序列化方式3
 
 ```java
@@ -142,9 +137,8 @@ public static void serializable3(AddressBookProtos.Person person) throws Excepti
 		AddressBookProtos.Person result = AddressBookProtos.Person.parseFrom(fileInputStream);  
 		System.out.println(result.getId());  
 	}
-```
-
-4. 
+```    
+5. 
   测试
 
 ```java
@@ -155,8 +149,7 @@ public static void main(String[] args) throws Exception {
 		serializable3(person);
 	}
 ```
-
-5.
+6.
  结果
  
 ```
