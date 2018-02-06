@@ -3,7 +3,7 @@ layout: post
 title: Spring-Boot整合jsp
 date: 2018-01-26
 categories: java
-tags: [spring-boot]
+tags: [spring boot]
 subtitle: 虽然Spring-Boot整合jsp是个简单的事,但自己确实踩了几下坑,记下来吧！总觉得spring的东西用熟了顺手，初期不熟时项目部署起来都各种心酸。
 ---
 

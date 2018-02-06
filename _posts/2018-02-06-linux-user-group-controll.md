@@ -3,7 +3,7 @@ layout: post
 title: Linux用户及用户组管理
 date: 2017-12-23
 categories: blog
-tags: [linux,用户,用户组]
+tags: [linux]
 subtitle: 无论是出于 Linux 本身的多用户多任务分时操作系统的性质，还是出于系统安全的考虑， Linux 用户和用户组都是这个系统最重要的几块拼图之一。无论是日常使用，还是作为服务器来应用 Linux ，创建合适的用户、组别，赋予相应的权限，是基本的使用技巧。
 ---
 

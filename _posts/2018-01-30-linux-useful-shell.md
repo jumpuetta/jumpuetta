@@ -3,7 +3,7 @@ layout: post
 title: Linux常用shell命令汇总
 date: 2018-01-30
 categories: blog
-tags: [Linux,shell]
+tags: [linux,shell]
 subtitle: Linux常用shell命令汇总
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: 定位java进程中最消耗cpu线程，并定位问题代码
 date: 2018-01-31
 categories: blog
-tags: [java,thread,cpu]
+tags: [java,thread]
 subtitle: 系统cpu使用率过高,java进程占用单核cpu一直保持在100%上下，原因排除
 ---
 

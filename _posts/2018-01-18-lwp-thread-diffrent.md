@@ -3,7 +3,7 @@ layout: post
 title: Linux轻量级进程
 date: 2018-01-18
 categories: blog
-tags: [Linux,LWP,轻量级进程,线程]
+tags: [linux,lwp,轻量级进程]
 subtitle: 在计算机操作系统中,轻量级进程（LWP）是一种实现多任务的方法
 ---
 

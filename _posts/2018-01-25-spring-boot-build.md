@@ -3,7 +3,7 @@ layout: post
 title: 通过Spring-Boot构建web工程
 date: 2018-01-25
 categories: java
-tags: [spring-boot]
+tags: [spring boot]
 subtitle:  使用 Spring Boot ，你不需要提供相关依赖的版本，Spring Boot 会自动对其进行管理。当你进行系统升级的时候，只需要修改Spring Boot 的版本号就行了，Spring Boot 会自动对其他的依赖进行升级。当然，你也可以根据具体的需要，指定依赖版本来覆盖Spring Boot 的推荐的依赖版本。
 ---
 
