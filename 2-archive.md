@@ -1,10 +1,16 @@
 ---
 layout: page
 title: "Archive"
-description: "你看到的，是我写作的所有文章"
+description: "时间线"
 header-img: "img/orange.jpg"
 ---
 
+<style type="text/css">
+    .listing-seperator{
+       font-size: 22px;
+       font-weight: 400;
+    }
+</style>
 
 <ul class="listing">
 {% for post in site.posts %}

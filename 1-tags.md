@@ -1,20 +1,32 @@
 ---
 layout: page
 title: "Tags"
-description: "哈哈，你找到了我的文章基因库"  
+description: "标签云"  
 header-img: "img/Red-Brown.jpg"  
 ---
 
-## 本页使用方法
+## 标签
 
-1. 在下面选一个你喜欢的词
-2. 点击它
-3. 相关的文章会「唰」地一声跳到页面顶端
-4. 马上试试？
+<style type="text/css">
+	#tag_cloud{
+		padding: 20px 0px;
+	}
 
-## 基因列表
-
-
+	#tag_cloud a{
+       padding: 5px 20px;
+       background-color: #343434;
+       font-size: 22px;
+       color: #FFFFFF;
+       font-weight: 400;
+       box-shadow: 5px 5px 5px #888888;
+       line-height: 2;
+	}
+    
+    .listing-seperator{
+       font-size: 22px;
+       font-weight: 400;
+    }
+</style>
 <div id='tag_cloud'>
 {% for tag in site.tags %}
 <a href="#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}">{{ tag[0] }}</a>
