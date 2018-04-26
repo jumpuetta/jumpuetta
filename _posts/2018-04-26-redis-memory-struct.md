@@ -1,4 +1,3 @@
-@@ -1,520 +0,0 @@
 ---
 layout: post
 title: 深入了解Redis内存模型
