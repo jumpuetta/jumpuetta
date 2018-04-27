@@ -376,13 +376,13 @@ snetinel的状态会被持久化地写入sentinel的配置文件中。每次当�
 
 以下是一些修改sentinel配置的命令：
 
-SENTINEL MONITOR <name> <ip> <port> <quorum> 这个命令告诉sentinel去监听一个新的master
-
-SENTINEL REMOVE <name> 命令sentinel放弃对某个master的监听
-
-SENTINEL SET <name> <option> <value> 这个命令很像Redis的CONFIG SET命令，用来改变指定master的配置。支持多个<option><value>。例如以下实例：
-
-SENTINEL SET objects-cache-master down-after-milliseconds 1000
+>SENTINEL MONITOR <name> <ip> <port> <quorum> 这个命令告诉sentinel去监听一个新的master
+>
+>SENTINEL REMOVE <name> 命令sentinel放弃对某个master的监听
+>
+>SENTINEL SET <name> <option> <value> 这个命令很像Redis的CONFIG SET命令，用来改变指定master的配置。支持多个<option><value>。例如以下实例：
+>
+>SENTINEL SET objects-cache-master down-after-milliseconds 1000
 
 只要是配置文件中存在的配置项，都可以用SENTINEL SET命令来设置。这个还可以用来设置master的属性，比如说quorum(票数)，而不需要先删除master，再重新添加master。例如：
 
