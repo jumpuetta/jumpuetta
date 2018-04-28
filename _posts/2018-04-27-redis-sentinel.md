@@ -229,10 +229,10 @@ slave通过masterauth来设置访问master时的密码。
 
 **slave的选举主要会评估slave的以下几个方面：**
 
-> 与master断开连接的次数
-> Slave的优先级
-> 数据复制的下标(用来评估slave当前拥有多少master的数据)
-> 进程ID
+> 与master断开连接的次数   
+> Slave的优先级   
+> 数据复制的下标(用来评估slave当前拥有多少master的数据)   
+> 进程ID   
 
 如果一个slave与master失去联系超过10次，并且每次都超过了配置的最大失联时间(down-after-milliseconds option)，并且，如果sentinel在进行failover时发现slave失联，那么这个slave就会被sentinel认为不适合用来做新master的。
 
@@ -242,9 +242,9 @@ slave通过masterauth来设置访问master时的密码。
 就会被认为失去选举资格。
 符合上述条件的slave才会被列入master候选人列表，并根据以下顺序来进行排序：
 
->1.sentinel首先会根据slaves的优先级来进行排序，优先级越小排名越靠前（？）。
->2.如果优先级相同，则查看复制的下标，哪个从master接收的复制数据多，哪个就靠前。
->3.如果优先级和下标都相同，就选择进程ID较小的那个。
+>1.sentinel首先会根据slaves的优先级来进行排序，优先级越小排名越靠前（？）。   
+>2.如果优先级相同，则查看复制的下标，哪个从master接收的复制数据多，哪个就靠前。    
+>3.如果优先级和下标都相同，就选择进程ID较小的那个。    
 
 一个redis无论是master还是slave，都必须在配置中指定一个slave优先级。要注意到master也是有可能通过failover变成slave的。如果一个redis的slave优先级配置为0，那么它将永远不会被选为master。但是它依然会从master哪里复制数据。
 
@@ -253,9 +253,9 @@ slave通过masterauth来设置访问master时的密码。
 ## 八、Sentinel支持集群 ##
 很显然，只使用单个sentinel进程来监控redis集群是不可靠的，当sentinel进程宕掉后(sentinel本身也有单点问题，single-point-of-failure)整个集群系统将无法按照预期的方式运行。所以有必要将sentinel集群，这样有几个好处：
 
-即使有一些sentinel进程宕掉了，依然可以进行redis集群的主备切换；
-如果只有一个sentinel进程，如果这个进程运行出错，或者是网络堵塞，那么将无法实现redis集群的主备切换（单点问题）;
-如果有多个sentinel，redis的客户端可以随意地连接任意一个sentinel来获得关于redis集群中的信息。
+>即使有一些sentinel进程宕掉了，依然可以进行redis集群的主备切换；  
+>如果只有一个sentinel进程，如果这个进程运行出错，或者是网络堵塞，那么将无法实现redis集群的主备切换（单点问题）;  
+>如果有多个sentinel，redis的客户端可以随意地连接任意一个sentinel来获得关于redis集群中的信息。   
 
 ## 九、Sentinel的“仲裁会” ##
 
@@ -270,10 +270,10 @@ sentinel is-master-down-by-addr这个命令有两个作用，一是确认下线�
 
 **选举过程：**
 
->1.每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。
->2.收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。
->3.如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者
->4.如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。
+>1.每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。    
+>2.收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。   
+>3.如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者     
+>4.如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。   
 
 
 ## 十、三个定时任务 ##
@@ -334,9 +334,9 @@ sentinel对于不可用有两种不同的看法，一个叫主观不可用(SDOWN
 
 当sentinel发送PING后，以下回复之一都被认为是合法的：
 
->PING replied with +PONG.
->PING replied with -LOADING error.
->PING replied with -MASTERDOWN error.
+>PING replied with +PONG.   
+>PING replied with -LOADING error.    
+>PING replied with -MASTERDOWN error.    
 其它任何回复（或者根本没有回复）都是不合法的。
 
 从SDOWN切换到ODOWN不需要任何一致性算法，只需要一个gossip协议：如果一个sentinel收到了足够多的sentinel发来消息告诉它某个master已经down掉了，SDOWN状态就会变成ODOWN状态。如果之后master可用了，这个状态就会相应地被清理掉。
@@ -417,8 +417,8 @@ Sentinel集群的特性保证了sentinel1和sentinel2得到了关于master的最
 但如果你把redis当做一个存储系统来使用，你也许就无法容忍这部分数据的丢失了。
 因为redis采用的是异步复制，在这样的场景下，没有办法避免数据的丢失。然而，你可以通过以下配置来配置redis3和redis1，使得数据不会丢失。
 ```
-min-slaves-to-write 1
-min-slaves-max-lag 10
+min-slaves-to-write 1    
+min-slaves-max-lag 10   
 ```
 通过上面的配置，当一个redis是master时，如果它不能向至少一个slave写数据(上面的min-slaves-to-write指定了slave的数量)，它将会拒绝接受客户端的写请求。由于复制是异步的，master无法向slave写数据意味着slave要么断开连接了，要么不在指定时间内向master发送同步数据的请求了(上面的min-slaves-max-lag指定了这个时间)。
 
@@ -432,10 +432,10 @@ snetinel的状态会被持久化地写入sentinel的配置文件中。每次当�
 
 以下是一些修改sentinel配置的命令：
 
->SENTINEL MONITOR <name> <ip> <port> <quorum> 这个命令告诉sentinel去监听一个新的master
->SENTINEL REMOVE <name> 命令sentinel放弃对某个master的监听
->SENTINEL SET <name> <option> <value> 这个命令很像Redis的CONFIG SET命令，用来改变指定master的配置。支持多个<option><value>。例如以下实例：
->SENTINEL SET objects-cache-master down-after-milliseconds 1000
+>SENTINEL MONITOR <name> <ip> <port> <quorum> 这个命令告诉sentinel去监听一个新的master    
+>SENTINEL REMOVE <name> 命令sentinel放弃对某个master的监听    
+>SENTINEL SET <name> <option> <value> 这个命令很像Redis的CONFIG SET命令，用来改变指定master的配置。支持多个<option><value>。例如以下实例：    
+>SENTINEL SET objects-cache-master down-after-milliseconds 1000    
 
 只要是配置文件中存在的配置项，都可以用SENTINEL SET命令来设置。这个还可以用来设置master的属性，比如说quorum(票数)，而不需要先删除master，再重新添加master。例如：
 
@@ -449,9 +449,9 @@ snetinel的状态会被持久化地写入sentinel的配置文件中。每次当�
 删除一个sentinel显得有点复杂：因为sentinel永远不会删除一个已经存在过的sentinel，即使它已经与组织失去联系很久了。
 要想删除一个sentinel，应该遵循如下步骤：
 
-> 停止所要删除的sentinel
-> 发送一个SENTINEL RESET * 命令给所有其它的sentinel实例，如果你想要重置指定master上面的sentinel，只需要把*号改为特定的名字，注意，需要一个接一个发，每次发送的间隔不低于30秒。
-> 检查一下所有的sentinels是否都有一致的当前sentinel数。使用SENTINEL MASTER mastername 来查询。
+> 停止所要删除的sentinel    
+> 发送一个SENTINEL RESET * 命令给所有其它的sentinel实例，如果你想要重置指定master上面的sentinel，只需要把*号改为特定的名字，注意，需要一个接一个发，每次发送的间隔不低于30秒。    
+> 检查一下所有的sentinels是否都有一致的当前sentinel数。使用SENTINEL MASTER mastername 来查询。    
 
 ## 十九、删除旧master或者不可达slave ## 
 sentinel永远会记录好一个Master的slaves，即使slave已经与组织失联好久了。这是很有用的，因为sentinel集群必须有能力把一个恢复可用的slave进行重新配置。
@@ -464,15 +464,15 @@ sentinel永远会记录好一个Master的slaves，即使slave已经与组织失�
 ## 二十、redis sentinel客户端实现原理 ##
 在介绍 java api之前我们先看看redis sentinel客户端实现的一个原理（4个步骤）
 
-**1.首先要获取所有sentinel节点的集合，获取一个可用节点，同时需要一个对应的masterName**
-**2.通过sentinel的一个api：get-master-addr-by-name-masterName(通过名字获取地址)，sentinel会返回master的真正地址和端口**
-**3.当客户端获取到master信息后，会通过role replication来进行一个验证是否是真正的master节点**
-**4.最后一步就是当sentinel感知到master的变化会通知客户端更换节点，其实内部是用的一个发布订阅模式（客户端订阅sentinel的某一个频道，当master发生变化，sentinel向这个频道publish一条消息，客户端就可以获取再对新的master进行一个连接）**
+**1.首先要获取所有sentinel节点的集合，获取一个可用节点，同时需要一个对应的masterName**   
+**2.通过sentinel的一个api：get-master-addr-by-name-masterName(通过名字获取地址)，sentinel会返回master的真正地址和端口**    
+**3.当客户端获取到master信息后，会通过role replication来进行一个验证是否是真正的master节点**     
+**4.最后一步就是当sentinel感知到master的变化会通知客户端更换节点，其实内部是用的一个发布订阅模式（客户端订阅sentinel的某一个频道，当master发生变化，sentinel向这个频道publish一条消息，客户端就可以获取再对新的master进行一个连接）**    
 
-客户端接入流程
->1.需要一个sentinel地址的集合
->2.需要masterName
->3.不是代理模式（不是每次都需要去连接sentinel节点去获取master信息，这样效率很差，而是采用通知的形式）
+客户端接入流程  
+>1.需要一个sentinel地址的集合    
+>2.需要masterName   
+>3.不是代理模式（不是每次都需要去连接sentinel节点去获取master信息，这样效率很差，而是采用通知的形式）    
 
 
 **使用Jedis访问sentinel**
