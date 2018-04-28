@@ -473,8 +473,12 @@ sentinel永远会记录好一个Master的slaves，即使slave已经与组织失�
 >1.需要一个sentinel地址的集合
 >2.需要masterName
 >3.不是代理模式（不是每次都需要去连接sentinel节点去获取master信息，这样效率很差，而是采用通知的形式）
+
+
 **使用Jedis访问sentinel**
-```
+
+
+```java
 //初始化Sentinel连接池，注意：这里名字是JedisSentinelPool只是为了区分它是sentinel方式连接，其内部还是连接master
 JedisSentinelPool sentinelPool = new JedisSentinelPool(masterName,SentinelSet,poolConfig,timeout);
 
