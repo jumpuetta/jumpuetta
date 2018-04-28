@@ -227,14 +227,11 @@ slave通过masterauth来设置访问master时的密码。
 ## 七、Slave选举与优先级 ##
 当一个sentinel准备好了要进行failover，并且收到了其他sentinel的授权，那么就需要选举出一个合适的slave来做为新的master。
 
-slave的选举主要会评估slave的以下几个方面：
+**slave的选举主要会评估slave的以下几个方面：**
 
 > 与master断开连接的次数
-> 
 > Slave的优先级
-> 
 > 数据复制的下标(用来评估slave当前拥有多少master的数据)
-> 
 > 进程ID
 
 如果一个slave与master失去联系超过10次，并且每次都超过了配置的最大失联时间(down-after-milliseconds option)，并且，如果sentinel在进行failover时发现slave失联，那么这个slave就会被sentinel认为不适合用来做新master的。
@@ -245,15 +242,13 @@ slave的选举主要会评估slave的以下几个方面：
 就会被认为失去选举资格。
 符合上述条件的slave才会被列入master候选人列表，并根据以下顺序来进行排序：
 
-sentinel首先会根据slaves的优先级来进行排序，优先级越小排名越靠前（？）。
+>1.sentinel首先会根据slaves的优先级来进行排序，优先级越小排名越靠前（？）。
+>2.如果优先级相同，则查看复制的下标，哪个从master接收的复制数据多，哪个就靠前。
+>3.如果优先级和下标都相同，就选择进程ID较小的那个。
 
-如果优先级相同，则查看复制的下标，哪个从master接收的复制数据多，哪个就靠前。
+一个redis无论是master还是slave，都必须在配置中指定一个slave优先级。要注意到master也是有可能通过failover变成slave的。如果一个redis的slave优先级配置为0，那么它将永远不会被选为master。但是它依然会从master哪里复制数据。
 
-如果优先级和下标都相同，就选择进程ID较小的那个。
-
-一个redis无论是master还是slave，都必须在配置中指定一个slave优先级。要注意到master也是有可能通过failover变成slave的。
-
-如果一个redis的slave优先级配置为0，那么它将永远不会被选为master。但是它依然会从master哪里复制数据。
+补充一点：还可以向任意sentinel发生sentinel failover <masterName> 进行手动故障转移，这样就不需要经过上述主客观和选举的过程。
 
 ## 八、Sentinel支持集群 ##
 很显然，只使用单个sentinel进程来监控redis集群是不可靠的，当sentinel进程宕掉后(sentinel本身也有单点问题，single-point-of-failure)整个集群系统将无法按照预期的方式运行。所以有必要将sentinel集群，这样有几个好处：
@@ -271,7 +266,39 @@ sentinel首先会根据slaves的优先级来进行排序，优先级越小排名
 这个区别看起来很微妙，但是很容易理解和使用。例如，集群中有5个sentinel，票数被设置为2，当2个sentinel认为一个master已经不可用了以后，将会触发failover，但是，进行failover的那个sentinel必须先获得至少3个sentinel的授权才可以实行failover。
 如果票数被设置为5，要达到ODOWN状态，必须所有5个sentinel都主观认为master为不可用，要进行failover，那么得获得所有5个sentinel的授权。
 
-## 十、配置版本号 ##
+sentinel is-master-down-by-addr这个命令有两个作用，一是确认下线判定，二是进行领导者选举。
+
+**选举过程：**
+
+>1.每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。
+>2.收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。
+>3.如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者
+>4.如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。
+
+
+## 十、三个定时任务 ##
+sentinel在内部有3个定时任务
+
+**1.每10秒每个sentinel会对master和slave执行info命令**
+
+这个任务达到两个目的：
+
+1.发现slave节点
+
+2.确认主从关系
+
+**2.每2秒每个sentinel通过master节点的channel交换信息（pub/sub）**
+
+master节点上有一个发布订阅的频道(__sentinel__:hello)。
+
+sentinel节点通过__sentinel__:hello频道进行信息交换(对节点的"看法"和自身的信息)，达成共识。
+
+**3.每1秒每个sentinel对其他sentinel和redis节点执行ping操作（相互监控）**
+
+这个其实是一个心跳检测，是失败判定的依据。
+
+
+## 十一、配置版本号 ##
 为什么要先获得大多数sentinel的认可时才能真正去执行failover呢？
 
 当一个sentinel被授权后，它将会获得宕掉的master的一份最新配置版本号，当failover执行结束以后，这个版本号将会被用于最新的配置。因为大多数sentinel都已经知道该版本号已经被要执行failover的sentinel拿走了，所以其他的sentinel都不能再去使用这个版本号。这意味着，每次failover都会附带有一个独一无二的版本号。我们将会看到这样做的重要性。
@@ -281,7 +308,7 @@ sentinel首先会根据slaves的优先级来进行排序，优先级越小排名
 redis sentinel保证了活跃性：如果大多数sentinel能够互相通信，最终将会有一个被授权去进行failover.
 redis sentinel也保证了安全性：每个试图去failover同一个master的sentinel都会得到一个独一无二的版本号。
 
-## 十一、配置传播 ##
+## 十二、配置传播 ##
 
 一旦一个sentinel成功地对一个master进行了failover，它将会把关于master的最新配置通过广播形式通知其它sentinel，其它的sentinel则更新对应master的配置。
 
@@ -299,7 +326,7 @@ redis sentinel也保证了安全性：每个试图去failover同一个master的s
 
 这意味着sentinel集群保证了第二种活跃性：一个能够互相通信的sentinel集群最终会采用版本号最高且相同的配置。
 
-## 十二、SDOWN和ODOWN的更多细节 ##
+## 十三、主观下线和客观下线 ##
 
 sentinel对于不可用有两种不同的看法，一个叫主观不可用(SDOWN),另外一个叫客观不可用(ODOWN)。SDOWN是sentinel自己主观上检测到的关于master的状态，ODOWN需要一定数量的sentinel达成一致意见才能认为一个master客观上已经宕掉，各个sentinel之间通过命令SENTINEL is_master_down_by_addr来获得其它sentinel对master的检测结果。
 
@@ -318,8 +345,28 @@ PING replied with -MASTERDOWN error.
 
 ODOWN状态只适用于master，对于不是master的redis节点sentinel之间不需要任何协商，slaves和sentinel不会有ODOWN状态。
 
+在redis-sentinel的conf文件里有这么两个配置：
 
-## 十三、Sentinel之间和Slaves之间的自动发现机制 ##
+**1.sentinel monitor <masterName> <ip> <port> <quorum>**
+
+四个参数含义：
+
+masterName这个是对某个master+slave组合的一个区分标识（一套sentinel是可以监听多套master+slave这样的组合的）。
+
+ip 和 port 就是master节点的 ip 和 端口号。
+
+quorum这个参数是进行客观下线的一个依据，意思是至少有 quorum 个sentinel主观的认为这个master有故障，才会对这个master进行下线以及故障转移。因为有的时候，某个sentinel节点可能因为自身网络原因，导致无法连接master，而此时master并没有出现故障，所以这就需要多个sentinel都一致认为该master有问题，才可以进行下一步操作，这就保证了公平性和高可用。
+
+**2.sentinel down-after-milliseconds <masterName> <timeout> **
+
+这个配置其实就是进行主观下线的一个依据，masterName这个参数不用说了，timeout是一个毫秒值，表示：如果这台sentinel超过timeout这个时间都无法连通master包括slave（slave不需要客观下线，因为不需要故障转移）的话，就会主观认为该master已经下线（实际下线需要客观下线的判断通过才会下线）
+
+那么，多个sentinel之间是如何达到共识的呢？
+
+这就是依赖于前面说的第二个定时任务，某个sentinel先将master节点进行一个主观下线，然后会将这个判定通过sentinel is-master-down-by-addr这个命令问对应的节点是否也同样认为该addr的master节点要做客观下线。最后当达成这一共识的sentinel个数达到前面说的quorum设置的这个值时，就会对该master节点下线进行故障转移。quorum的值一般设置为sentinel个数的二分之一加1，例如3个sentinel就设置2
+
+
+## 十四、Sentinel之间和Slaves之间的自动发现机制 ##
 
 虽然sentinel集群中各个sentinel都互相连接彼此来检查对方的可用性以及互相发送消息。但是你不用在任何一个sentinel配置任何其它的sentinel的节点。因为sentinel利用了master的发布/订阅机制去自动发现其它也监控了统一master的sentinel节点。
 
@@ -334,7 +381,7 @@ ODOWN状态只适用于master，对于不是master的redis节点sentinel之间�
 
 在为一个master添加一个新的sentinel前，sentinel总是检查是否已经有sentinel与新的sentinel的进程号或者是地址是一样的。如果是那样，这个sentinel将会被删除，而把新的sentinel添加上去。
 
-## 十四、网络隔离时的一致性 ##
+## 十五、网络隔离时的一致性 ##
 
 redis sentinel集群的配置的一致性模型为最终一致性，集群中每个sentinel最终都会采用最高版本的配置。然而，在实际的应用环境中，有三个不同的角色会与sentinel打交道：
 
@@ -374,10 +421,10 @@ min-slaves-to-write 1
 min-slaves-max-lag 10
 通过上面的配置，当一个redis是master时，如果它不能向至少一个slave写数据(上面的min-slaves-to-write指定了slave的数量)，它将会拒绝接受客户端的写请求。由于复制是异步的，master无法向slave写数据意味着slave要么断开连接了，要么不在指定时间内向master发送同步数据的请求了(上面的min-slaves-max-lag指定了这个时间)。
 
-## 十五、Sentinel状态持久化 ##
+## 十六、Sentinel状态持久化 ##
 snetinel的状态会被持久化地写入sentinel的配置文件中。每次当收到一个新的配置时，或者新创建一个配置时，配置会被持久化到硬盘中，并带上配置的版本戳。这意味着，可以安全的停止和重启sentinel进程。
 
-## 十六、动态修改Sentinel配置 ## 
+## 十七、动态修改Sentinel配置 ## 
 从redis2.8.4开始，sentinel提供了一组API用来添加，删除，修改master的配置。
 
 需要注意的是，如果你通过API修改了一个sentinel的配置，sentinel不会把修改的配置告诉其他sentinel。你需要自己手动地对多个sentinel发送修改配置的命令。
@@ -396,7 +443,7 @@ snetinel的状态会被持久化地写入sentinel的配置文件中。每次当�
 
 >SENTINEL SET objects-cache-master quorum 5
 
-## 十七、增加或删除Sentinel ## 
+## 十八、增加或删除Sentinel ## 
 由于有sentinel自动发现机制，所以添加一个sentinel到你的集群中非常容易，你所需要做的只是监控到某个Master上，然后新添加的sentinel就能获得其他sentinel的信息以及masterd所有的slave。
 
 如果你需要添加多个sentinel，建议你一个接着一个添加，这样可以预防网络隔离带来的问题。你可以每个30秒添加一个sentinel。最后你可以用SENTINEL MASTER mastername来检查一下是否所有的sentinel都已经监控到了master。
@@ -410,14 +457,14 @@ snetinel的状态会被持久化地写入sentinel的配置文件中。每次当�
 > 
 > 检查一下所有的sentinels是否都有一致的当前sentinel数。使用SENTINEL MASTER mastername 来查询。
 
-## 十八、删除旧master或者不可达slave ## 
+## 十九、删除旧master或者不可达slave ## 
 sentinel永远会记录好一个Master的slaves，即使slave已经与组织失联好久了。这是很有用的，因为sentinel集群必须有能力把一个恢复可用的slave进行重新配置。
 
 并且，failover后，失效的master将会被标记为新master的一个slave，这样的话，当它变得可用时，就会从新master上复制数据。
 
 然后，有时候你想要永久地删除掉一个slave(有可能它曾经是个master)，你只需要发送一个SENTINEL RESET master命令给所有的sentinels，它们将会更新列表里能够正确地复制master数据的slave。
 
-## 十九、TILT 模式 ##
+## 二十、TILT 模式 ##
 redis sentinel非常依赖系统时间，例如它会使用系统时间来判断一个PING回复用了多久的时间。
 然而，假如系统时间被修改了，或者是系统十分繁忙，或者是进程堵塞了，sentinel可能会出现运行不正常的情况。
 当系统的稳定性下降时，TILT模式是sentinel可以进入的一种的保护模式。当进入TILT模式时，sentinel会继续监控工作，但是它不会有任何其他动作，它也不会去回应is-master-down-by-addr这样的命令了，因为它在TILT模式下，检测失效节点的能力已经变得让人不可信任了。
