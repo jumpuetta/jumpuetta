@@ -101,3 +101,47 @@ subtitle: null
 **乐观锁几种方式的区别：**
 
 新系统设计可以使用version方式和timestamp方式，需要增加字段，应用范围是整条数据，不论那个字段修改都会更新version,也就是说两个事务更新同一条记录的两个不相关字段也是互斥的，不能同步进行。旧系统不能修改数据库表结构的时候使用数据字段作为版本控制信息，不需要新增字段，待更新字段方式只要其他事务修改的字段和当前事务修改的字段没有重叠就可以同步进行，并发性更高。
+
+
+
+## 查看和修改MySQL数据库的事物隔离级别
+
+**查看MySQL的事物隔离级别**
+
+```
+mysql> show variables like '%isolation%';
++---------------+-----------------+
+| Variable_name | Value           |
++---------------+-----------------+
+| tx_isolation  | REPEATABLE-READ |
++---------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> select @@global.tx_isolation, @@tx_isolation;
++-----------------------+-----------------+
+| @@global.tx_isolation | @@tx_isolation  |
++-----------------------+-----------------+
+| REPEATABLE-READ       | REPEATABLE-READ |
++-----------------------+-----------------+
+1 row in set (0.00 sec)
+
+```
+
+**修改MySQL数据库的事物隔离级别**
+
+```
+mysql> help ISOLATION
+Name: 'ISOLATION'
+Description:
+Syntax:
+SET [GLOBAL | SESSION] TRANSACTION ISOLATION LEVEL
+  {
+       REPEATABLE READ
+     | READ COMMITTED
+     | READ UNCOMMITTED
+     | SERIALIZABLE
+   }
+```
+
+
+
