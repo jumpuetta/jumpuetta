@@ -6,6 +6,7 @@ categories: blog
 tags:
   - 数据库
   - 锁
+  - 事务
 subtitle: null
 ---
 
@@ -139,6 +140,4 @@ SET [GLOBAL | SESSION] TRANSACTION ISOLATION LEVEL
      | SERIALIZABLE
    }
 ```
-
-
 
